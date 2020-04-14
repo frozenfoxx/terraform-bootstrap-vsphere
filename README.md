@@ -30,7 +30,7 @@ This module requires a template host VM to clone from. This machine will be expe
 
 * `ubuntu`
   * `/home/ubuntu/.ssh/authorized_keys` set with the SSH public key provided in `files`, `ubuntu.pub`.
-  * Member of the `sudoers` group.
+  * Member of the `sudo` group.
   * **NOTE**: this user will be destroyed at the end of deployment.
 
 # Usage
