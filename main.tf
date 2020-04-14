@@ -1,48 +1,48 @@
 resource "vsphere_virtual_machine" "main" {
-  name             = "${var.name}"
-  resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
-  datastore_id     = "${data.vsphere_datastore.datastore.id}"
-  folder           = "${var.folder}"
+  name             = var.name
+  resource_pool_id = data.vsphere_resource_pool.pool.id
+  datastore_id     = data.vsphere_datastore.datastore.id
+  folder           = var.folder
 
   num_cpus         = 2
   memory           = 4096
   guest_id         = "ubuntu64Guest"
 
   network_interface {
-    network_id   = "${data.vsphere_network.management.id}"
-    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+    network_id   = data.vsphere_network.management.id
+    adapter_type = data.vsphere_virtual_machine.template.network_interface_types[0]
   }
 
   disk {
     label            = "disk0"
-    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
-    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
+    size             = data.vsphere_virtual_machine.template.disks.0.size
+    thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
   }
 
   clone {
-    template_uuid = "${data.vsphere_virtual_machine.template.id}"
+    template_uuid = data.vsphere_virtual_machine.template.id
 
     customize {
       linux_options {
-        host_name = "${var.name}"
-        domain    = "${var.management_domain}"
+        host_name = var.name
+        domain    = var.management_domain
       }
 
       network_interface {
-        ipv4_address = "${var.management_ipv4_address}"
-        ipv4_netmask = "${var.management_ipv4_prefix_length}"
+        ipv4_address = var.management_ipv4_address
+        ipv4_netmask = var.management_ipv4_prefix_length
       }
 
-      timeout         = "${var.timeout}"
-      ipv4_gateway    = "${var.management_gateway}"
-      dns_suffix_list = ["${var.management_domain}"]
+      timeout         = var.timeout
+      ipv4_gateway    = var.management_gateway
+      dns_suffix_list = [var.management_domain]
       dns_server_list = var.management_dns_servers
     }
   }
  
   connection {
     type        = "ssh"
-    host        = "${var.management_ipv4_address}"
+    host        = var.management_ipv4_address
     user        = "ubuntu"
     private_key = chomp(file("${path.module}/files/ubuntu.key"))
   }
