@@ -57,7 +57,6 @@ module "bootstrap-1" {
   management_netlabel           = var.management_netlabel
   name                          = "[Hostname]"
   password                      = var.password
-  private_key                   = chomp(file(var.private_key))
   template                      = var.template
   username                      = var.username
   vmtimez                       = var.vmtimez
