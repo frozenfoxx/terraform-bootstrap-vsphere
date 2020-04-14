@@ -44,7 +44,7 @@ resource "vsphere_virtual_machine" "main" {
     type        = "ssh"
     host        = "${var.management_ipv4_address}"
     user        = "ubuntu"
-    private_key = var.private_key
+    private_key = chomp(file("${path.module}/files/ubuntu.key"))
   }
 
   provisioner "file" {
