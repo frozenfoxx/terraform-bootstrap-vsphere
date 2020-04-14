@@ -39,29 +39,22 @@ resource "vsphere_virtual_machine" "main" {
       dns_server_list = var.management_dns_servers
     }
   }
+ 
+  connection {
+    type        = "ssh"
+    host        = "${var.management_ipv4_address}"
+    user        = "ubuntu"
+    private_key = var.private_key
+  }
 
   provisioner "file" {
     source      = "${path.module}/scripts/"
     destination = "/tmp"
-
-    connection {
-      type        = "ssh"
-      host        = "${var.management_ipv4_address}"
-      user        = "ubuntu"
-      private_key = "${file("${path.module}/files/ubuntu.key")}"
-    }
   }
 
   provisioner "file" {
     source      = "${path.module}/files"
     destination = "/tmp"
-
-    connection {
-      type        = "ssh"
-      host        = "${var.management_ipv4_address}"
-      user        = "ubuntu"
-      private_key = "${file("${path.module}/files/ubuntu.key")}"
-    }
   }
 
   provisioner "remote-exec" {
@@ -70,13 +63,6 @@ resource "vsphere_virtual_machine" "main" {
       "sudo cp -r /tmp/files/* /data/",
       "sudo rm -r /tmp/files",
     ]
-
-    connection {
-      type        = "ssh"
-      host        = "${var.management_ipv4_address}"
-      user        = "ubuntu"
-      private_key = "${file("${path.module}/files/ubuntu.key")}"
-    }
   }
 
   provisioner "remote-exec" {
@@ -92,12 +78,5 @@ resource "vsphere_virtual_machine" "main" {
       "sudo rm /tmp/*.sh",
       "sudo userdel -fr ubuntu"
     ]
-
-    connection {
-      type        = "ssh"
-      host        = "${var.management_ipv4_address}"
-      user        = "ubuntu"
-      private_key = "${file("${path.module}/files/ubuntu.key")}"
-    }
   }
 }
