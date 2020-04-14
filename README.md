@@ -21,6 +21,10 @@ This module requires a template host VM to clone from. This machine will be expe
   * Update the `/lib/systemd/system/open-vm-tools.service` _after_ `open-vm-tools` is installed:
     * Add `"After=dbus.service"` under `[Unit]`
 
+## Network
+
+* set the IP address to the same as the `management_ipv4_address` in case customization doesn't work as expected.
+
 ## Packages
 
 * `open-vm-tools`
