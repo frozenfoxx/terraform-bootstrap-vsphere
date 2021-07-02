@@ -53,6 +53,15 @@ EOF
   ) > /etc/dnsmasq.conf
 }
 
+## If applicable, disable resolved
+disable_resolved()
+{
+  echo "Disable resolved..."
+
+  sudo systemctl disable systemd-resolved
+  sudo systemctl mask systemd-resolved
+}
+
 ## Install dnsmasq
 install_dnsmasq()
 {
@@ -114,4 +123,5 @@ done
 
 install_dnsmasq
 configure_dnsmasq
+disable_resolved
 restart_dnsmasq
