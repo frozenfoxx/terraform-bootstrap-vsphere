@@ -8,7 +8,7 @@ This module requires a template host VM to clone from. This machine will be expe
 
 ## Distribution
 
-* Ubuntu 18.04
+* Ubuntu 20.04
 
 ## Filesystem
 
