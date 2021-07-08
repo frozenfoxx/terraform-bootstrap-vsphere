@@ -58,7 +58,7 @@ disable_resolved()
 {
   echo "Disable resolved..."
 
-  sudo systemctl disable systemd-resolved
+  sudo systemctl disable --now systemd-resolved
   sudo systemctl mask systemd-resolved
 }
 
@@ -67,6 +67,8 @@ install_dnsmasq()
 {
   apt-get update && \
     apt-get install --yes --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" ${PACKAGE}
+    
+  echo 'nameserver 1.1.1.1' >> /etc/resolv.conf
 }
 
 ## Restart dnsmasq
