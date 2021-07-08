@@ -27,7 +27,7 @@ install_pxelinux_ubuntu()
   mkdir -p ${DATAROOT}/tftp
 
   # Pull the netboot image and unroll
-  wget -O /tmp/netboot.tar.gz http://archive.ubuntu.com/ubuntu/dists/${RELEASE}-updates/main/installer-amd64/current/images/netboot/netboot.tar.gz
+  wget -O /tmp/netboot.tar.gz http://archive.ubuntu.com/ubuntu/dists/${RELEASE}-updates/main/installer-amd64/current/legacy-images/netboot/netboot.tar.gz
   tar xvzf /tmp/netboot.tar.gz --directory ${DATAROOT}/tftp/
   rm /tmp/netboot.tar.gz
 }
